@@ -76,11 +76,6 @@ export default function LoginPage() {
               />
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
-            <div className="text-sm text-gray-500">
-              <p>Use the following credentials to log in:</p>
-              <p>Email: john@example.com</p>
-              <p>Password: password</p>
-            </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full">
