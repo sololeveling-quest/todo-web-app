@@ -33,7 +33,6 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: SidebarPr
     setIsLoading(true)
     try {
       const fetchedCategories = await getCategories()
-      console.log(fetchedCategories)
       setCategories(fetchedCategories)
     } catch (error) {
       console.error('Failed to fetch categories:', error)
@@ -82,7 +81,7 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: SidebarPr
 
   return (
     <div className="w-64 border-r h-screen flex flex-col bg-white">
-      <UserProfile name={user?.name ?? ''} email={user?.email ?? ''} />
+      <UserProfile />
 
       <div className="p-4">
         <div className="relative">

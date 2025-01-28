@@ -6,29 +6,26 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
 
-interface UserProfileProps {
-  name: string
-  email: string
-}
-
-export function UserProfile({ name, email }: UserProfileProps) {
+export function UserProfile() {
   const router = useRouter()
-  const { logout } = useAuth()
+  const { user, logout } = useAuth()
 
   const handleLogout = () => {
     logout()
     router.push('/login')
   }
 
+  console.log(user)
+
   return (
     <div className="flex items-center justify-between p-4 border-b">
       <div className="flex items-center space-x-3">
         <Avatar>
-          <AvatarFallback>{name.charAt(0)}</AvatarFallback>
+          <AvatarFallback>{user?.name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="space-y-1">
-          <p className="text-sm font-medium leading-none">{name}</p>
-          <p className="text-xs text-muted-foreground">{email}</p>
+          <p className="text-sm font-medium leading-none">{user?.name}</p>
+          <p className="text-xs text-muted-foreground">{user?.email}</p>
         </div>
       </div>
       <Button variant="ghost" size="icon" onClick={handleLogout}>
