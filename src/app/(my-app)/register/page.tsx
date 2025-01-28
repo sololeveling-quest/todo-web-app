@@ -1,34 +1,29 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { registerUser } from "@/lib/client/api"
-import { registerSchema } from "@/lib/validation"
-import Link from "next/link"
-
-const registerSchema = z
-  .object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  })
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from '@/components/ui/card'
+import { registerUser } from '@/lib/client/api'
+import { registerSchema } from '@/lib/validation'
+import Link from 'next/link'
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   })
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
   const router = useRouter()
@@ -43,13 +38,20 @@ export default function RegisterPage() {
       registerSchema.parse(formData)
       const result = await registerUser(formData)
       if (result.user) {
-        router.push("/login")
+        router.push('/login')
       } else {
-        setErrors({ form: "Registration failed. Please try again." })
+        setErrors({ form: 'Registration failed. Please try again.' })
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
-        setErrors(error.flatten().fieldErrors as { [key: string]: string })
+        const fieldErrors = error.flatten().fieldErrors
+        const formattedErrors: { [key: string]: string } = {}
+        for (const key in fieldErrors) {
+          if (fieldErrors[key]) {
+            formattedErrors[key] = fieldErrors[key][0]
+          }
+        }
+        setErrors(formattedErrors)
       } else if (error instanceof Error) {
         setErrors({ form: error.message })
       }
@@ -67,12 +69,26 @@ export default function RegisterPage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" type="text" required value={formData.name} onChange={handleChange} />
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                required
+                value={formData.name}
+                onChange={handleChange}
+              />
               {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+              />
               {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
             <div className="space-y-2">
@@ -97,7 +113,9 @@ export default function RegisterPage() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
               />
-              {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+              )}
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
@@ -106,7 +124,7 @@ export default function RegisterPage() {
             </Button>
             <div className="text-sm text-center space-y-2">
               <span>
-                Already have an account?{" "}
+                Already have an account?{' '}
                 <Link href="/login" className="text-blue-500 hover:underline">
                   Login here
                 </Link>
@@ -121,4 +139,3 @@ export default function RegisterPage() {
     </div>
   )
 }
-

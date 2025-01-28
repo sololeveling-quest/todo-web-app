@@ -56,10 +56,8 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
   }
 
   const handleDeleteTask = async (taskId: string) => {
-    const result = await deleteTask(taskId)
-    if (result) {
-      onTasksChange()
-    }
+    await deleteTask(taskId)
+    onTasksChange()
   }
 
   const handleEditTask = async (updatedTask: Task) => {

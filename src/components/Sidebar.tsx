@@ -70,9 +70,7 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: SidebarPr
 
   const handleDeleteCategory = async (id: string) => {
     const result = await deleteCategory(id)
-    if (result) {
-      setCategories(categories.filter((c) => c.id !== id))
-    }
+    setCategories(categories.filter((c) => c.id !== id))
   }
 
   const getTaskCount = (categoryId: string) => {
