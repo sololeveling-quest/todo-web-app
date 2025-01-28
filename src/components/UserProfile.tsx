@@ -19,7 +19,7 @@ export function UserProfile() {
     <div className="flex items-center justify-between p-4 border-b">
       <div className="flex items-center space-x-3">
         <Avatar>
-          <AvatarFallback>{user?.name.charAt(0)}</AvatarFallback>
+          <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="space-y-1">
           <p className="text-sm font-medium leading-none">{user?.name}</p>
