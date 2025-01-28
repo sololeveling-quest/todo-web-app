@@ -1,6 +1,7 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -16,6 +17,11 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  email: resendAdapter({
+    defaultFromAddress: process.env.RESEND_FROM_ADDRESS ?? 'freddy@sololeveling.quest',
+    defaultFromName: process.env.RESEND_FROM_NAME ?? 'Solo Leveling Quest',
+    apiKey: process.env.RESEND_API_KEY ?? '',
+  }),
   admin: {
     user: Users.slug,
     importMap: {
@@ -33,7 +39,7 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    payloadCloudPlugin(),
+    // payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
 })
