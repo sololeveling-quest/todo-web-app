@@ -15,8 +15,6 @@ export function UserProfile() {
     router.push('/login')
   }
 
-  console.log(user)
-
   return (
     <div className="flex items-center justify-between p-4 border-b">
       <div className="flex items-center space-x-3">
