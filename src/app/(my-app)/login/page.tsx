@@ -1,19 +1,26 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import Link from "next/link"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { loginSchema } from "@/lib/validation"
-import { useAuth } from "@/context/AuthContext"
+import { useState } from 'react'
+import Link from 'next/link'
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from '@/components/ui/card'
+import { loginSchema } from '@/lib/validation'
+import { useAuth } from '@/context/AuthContext'
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   })
   const [error, setError] = useState<string | null>(null)
   const { login } = useAuth()
@@ -32,7 +39,7 @@ export default function LoginPage() {
       if (error instanceof z.ZodError) {
         setError(error.errors[0].message)
       } else {
-        setError("Login failed. Please try again.")
+        setError('Login failed. Please try again.')
       }
     }
   }
@@ -48,7 +55,14 @@ export default function LoginPage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
@@ -77,7 +91,7 @@ export default function LoginPage() {
                 Forgot password?
               </Link>
               <span>
-                Don't have an account?{" "}
+                Don&quote;t have an account?{' '}
                 <Link href="/register" className="text-blue-500 hover:underline">
                   Register here
                 </Link>
@@ -89,4 +103,3 @@ export default function LoginPage() {
     </div>
   )
 }
-

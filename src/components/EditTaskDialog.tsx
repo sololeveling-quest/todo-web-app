@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { useState, type KeyboardEvent } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState, type KeyboardEvent } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Checkbox } from '@/components/ui/checkbox'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Dialog,
   DialogContent,
@@ -14,10 +14,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Plus, X } from "lucide-react"
-import type { Task, Step, Note } from "@/lib/types"
+} from '@/components/ui/dialog'
+import { Label } from '@/components/ui/label'
+import { Plus, X } from 'lucide-react'
+import type { Task, Step, Note } from '@/lib/types'
 
 interface EditTaskDialogProps {
   task: Task
@@ -27,17 +27,17 @@ interface EditTaskDialogProps {
 
 export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
   const [title, setTitle] = useState(task.title)
-  const [description, setDescription] = useState(task.description || "")
+  const [description, setDescription] = useState(task.description || '')
   const [completed, setCompleted] = useState(task.completed)
-  const [dueDate, setDueDate] = useState(task.dueDate || "")
-  const [reminder, setReminder] = useState(task.reminder || "")
+  const [dueDate, setDueDate] = useState(task.dueDate || '')
+  const [reminder, setReminder] = useState(task.reminder || '')
   const [steps, setSteps] = useState<Step[]>(task.steps || [])
-  const [newStep, setNewStep] = useState("")
+  const [newStep, setNewStep] = useState('')
   const [notes, setNotes] = useState<Note[]>(task.notes || [])
-  const [newNote, setNewNote] = useState("")
+  const [newNote, setNewNote] = useState('')
   const [hashtags, setHashtags] = useState<string[]>(task.hashtags || [])
-  const [newHashtag, setNewHashtag] = useState("")
-  const [activeTab, setActiveTab] = useState("main")
+  const [newHashtag, setNewHashtag] = useState('')
+  const [activeTab, setActiveTab] = useState('main')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -59,7 +59,7 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
   const addStep = () => {
     if (newStep.trim()) {
       setSteps([...steps, { id: Date.now().toString(), content: newStep.trim(), completed: false }])
-      setNewStep("")
+      setNewStep('')
     }
   }
 
@@ -68,13 +68,18 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
   }
 
   const toggleStepCompletion = (stepId: string) => {
-    setSteps(steps.map((step) => (step.id === stepId ? { ...step, completed: !step.completed } : step)))
+    setSteps(
+      steps.map((step) => (step.id === stepId ? { ...step, completed: !step.completed } : step)),
+    )
   }
 
   const addNote = () => {
     if (newNote.trim()) {
-      setNotes([...notes, { id: Date.now().toString(), content: newNote.trim(), createdAt: new Date().toISOString() }])
-      setNewNote("")
+      setNotes([
+        ...notes,
+        { id: Date.now().toString(), content: newNote.trim(), createdAt: new Date().toISOString() },
+      ])
+      setNewNote('')
     }
   }
 
@@ -85,7 +90,7 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
   const addHashtag = () => {
     if (newHashtag.trim() && !hashtags.includes(newHashtag.trim())) {
       setHashtags([...hashtags, newHashtag.trim()])
-      setNewHashtag("")
+      setNewHashtag('')
     }
   }
 
@@ -94,7 +99,7 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
   }
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>, action: () => void) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault()
       action()
     }
@@ -105,7 +110,9 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit Task</DialogTitle>
-          <DialogDescription>Make changes to your task here. Click save when you're done.</DialogDescription>
+          <DialogDescription>
+            Make changes to your task here. Click save when you&quote;re done.
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -121,7 +128,12 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
                   <Label htmlFor="title" className="text-right">
                     Title
                   </Label>
-                  <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} className="col-span-3" />
+                  <Input
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="col-span-3"
+                  />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="description" className="text-right">
@@ -212,9 +224,17 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
                 <ScrollArea className="h-[200px] w-full rounded-md border p-4">
                   {steps.map((step) => (
                     <div key={step.id} className="flex items-center space-x-2 mb-2">
-                      <Checkbox checked={step.completed} onCheckedChange={() => toggleStepCompletion(step.id)} />
-                      <span className={step.completed ? "line-through" : ""}>{step.content}</span>
-                      <Button type="button" variant="ghost" size="icon" onClick={() => deleteStep(step.id)}>
+                      <Checkbox
+                        checked={step.completed}
+                        onCheckedChange={() => toggleStepCompletion(step.id)}
+                      />
+                      <span className={step.completed ? 'line-through' : ''}>{step.content}</span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => deleteStep(step.id)}
+                      >
                         <X className="h-4 w-4" />
                       </Button>
                     </div>
@@ -241,8 +261,15 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
                   {notes.map((note) => (
                     <div key={note.id} className="flex items-center space-x-2 mb-2">
                       <span>{note.content}</span>
-                      <span className="text-xs text-muted-foreground">{new Date(note.createdAt).toLocaleString()}</span>
-                      <Button type="button" variant="ghost" size="icon" onClick={() => deleteNote(note.id)}>
+                      <span className="text-xs text-muted-foreground">
+                        {new Date(note.createdAt).toLocaleString()}
+                      </span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => deleteNote(note.id)}
+                      >
                         <X className="h-4 w-4" />
                       </Button>
                     </div>
@@ -271,4 +298,3 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
     </Dialog>
   )
 }
-

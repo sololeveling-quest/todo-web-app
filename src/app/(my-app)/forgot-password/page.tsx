@@ -1,17 +1,24 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { forgotPassword } from "@/lib/client/api"
-import { forgotPasswordSchema } from "@/lib/validation"
-import Link from "next/link"
+import { useState } from 'react'
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from '@/components/ui/card'
+import { forgotPassword } from '@/lib/client/api'
+import { forgotPasswordSchema } from '@/lib/validation'
+import Link from 'next/link'
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState('')
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -22,7 +29,7 @@ export default function ForgotPasswordPage() {
     try {
       forgotPasswordSchema.parse({ email })
       await forgotPassword(email)
-      setMessage("If an account exists for this email, a password reset link has been sent.")
+      setMessage('If an account exists for this email, a password reset link has been sent.')
     } catch (error) {
       if (error instanceof z.ZodError) {
         setError(error.errors[0].message)
@@ -64,7 +71,7 @@ export default function ForgotPasswordPage() {
                 Back to Login
               </Link>
               <span>
-                Don't have an account?{" "}
+                Don&quote;t have an account?{' '}
                 <Link href="/register" className="text-blue-500 hover:underline">
                   Register here
                 </Link>
@@ -76,4 +83,3 @@ export default function ForgotPasswordPage() {
     </div>
   )
 }
-
