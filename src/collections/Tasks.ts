@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import mongoose from 'mongoose'
 
 const Tasks: CollectionConfig = {
   slug: 'tasks',
@@ -49,6 +50,37 @@ const Tasks: CollectionConfig = {
       },
     ],
   },
+  endpoints: [
+    {
+      path: '/categories-count',
+      method: 'get',
+      handler: async (req) => {
+        if (!req.user) {
+          throw new Error('You must be logged in to view tasks')
+        }
+
+        const taskCollection = req.payload.db.collections.tasks
+
+        // aggregate the count of tasks for each category using mongodb
+        const result = await taskCollection.aggregate([
+          {
+            $match: {
+              user: new mongoose.Types.ObjectId(req.user.id),
+              category: { $ne: null },
+            },
+          },
+          {
+            $group: {
+              _id: '$category',
+              count: { $sum: 1 },
+            },
+          },
+        ])
+
+        return Response.json({ stats: result.map((r) => ({ category: r._id, count: r.count })) })
+      },
+    },
+  ],
   fields: [
     {
       name: 'title',

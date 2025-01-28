@@ -5,6 +5,27 @@ const Categories: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
   },
+  access: {
+    read: ({ req }) => {
+      if (!req.user) {
+        return false
+      }
+
+      if (req.user.role === 'user') {
+        return {
+          user: {
+            equals: req.user.id,
+          },
+        }
+      }
+
+      if (req.user.role === 'admin') {
+        return true
+      }
+
+      return false
+    },
+  },
   fields: [
     {
       name: 'name',

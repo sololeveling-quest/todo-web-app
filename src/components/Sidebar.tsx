@@ -5,9 +5,14 @@ import { Search, Plus, Check, X, Pencil, Trash } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { UserProfile } from './UserProfile'
-import { getCategories, addCategory, updateCategory, deleteCategory } from '@/lib/client/api'
+import {
+  getCategories,
+  addCategory,
+  updateCategory,
+  deleteCategory,
+  getTaskCategoryCount,
+} from '@/lib/client/api'
 import type { Category, Task } from '@/lib/types'
-import { useAuth } from '@/context/AuthContext'
 
 interface SidebarProps {
   onSelectCategory: (category: Category) => void
@@ -15,25 +20,37 @@ interface SidebarProps {
   tasks: Task[]
 }
 
-export function Sidebar({ onSelectCategory, selectedCategory, tasks }: SidebarProps) {
+export function Sidebar({ onSelectCategory, selectedCategory, tasks }: Readonly<SidebarProps>) {
   const [categories, setCategories] = useState<Category[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [newCategory, setNewCategory] = useState('')
-  const [editingId, setEditingId] = useState<string | null>(null)
   const [editingName, setEditingName] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null)
-  const { user } = useAuth()
+  const [stats, setStats] = useState<{ category: string; count: number }[]>([])
 
   useEffect(() => {
     fetchCategories()
+    fetchTasksCount()
   }, [])
+
+  useEffect(() => {
+    fetchTasksCount()
+  }, [tasks])
+
+  const fetchTasksCount = async () => {
+    const fetchedTasks = await getTaskCategoryCount()
+    setStats(fetchedTasks.stats)
+  }
 
   const fetchCategories = async () => {
     setIsLoading(true)
     try {
       const fetchedCategories = await getCategories()
       setCategories(fetchedCategories)
+      if (fetchedCategories.length > 0) {
+        onSelectCategory(fetchedCategories[0])
+      }
     } catch (error) {
       console.error('Failed to fetch categories:', error)
     } finally {
@@ -76,11 +93,11 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: SidebarPr
     if (categoryId === 'all') {
       return tasks.length
     }
-    return tasks.filter((task) => task.categoryId === categoryId).length
+    return stats.find((stat) => stat.category === categoryId)?.count ?? 0
   }
 
   return (
-    <div className="w-64 border-r h-screen flex flex-col bg-white">
+    <div className="w-80 border-r h-screen flex flex-col bg-white">
       <UserProfile />
 
       <div className="p-4">

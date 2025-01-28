@@ -44,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true)
     try {
       const loggedInUser = await loginUser({ email, password })
-      setUser(loggedInUser)
+      setUser(loggedInUser.user)
       router.push('/dashboard')
     } catch (error) {
       console.error('Login error:', error)

@@ -21,11 +21,10 @@ export interface Task {
   title: string
   description?: string
   completed: boolean
-  categoryId?: string
+  category?: string
   hashtags: string[]
   dueDate?: string
   reminder?: string
   steps: Step[]
   notes: Note[]
 }
-

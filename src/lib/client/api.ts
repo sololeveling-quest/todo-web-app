@@ -102,6 +102,15 @@ export async function deleteCategory(id: string): Promise<void> {
 }
 
 // Task-related functions
+export async function getTaskCategoryCount(): Promise<{
+  stats: { category: string; count: number }[]
+}> {
+  const response = await fetch(`${API_URL}/tasks/categories-count`, {
+    credentials: 'include',
+  })
+  return handleResponse(response)
+}
+
 export async function getTasks(category: string): Promise<Task[]> {
   const response = await fetch(`${API_URL}/tasks?where[category][equals]=${category}`, {
     credentials: 'include',
