@@ -11,7 +11,7 @@ const Categories: CollectionConfig = {
         return false
       }
 
-      if (req.user.role === 'user') {
+      if (req.user.collection === 'users' && req.user.role === 'user') {
         return {
           user: {
             equals: req.user.id,
@@ -19,7 +19,7 @@ const Categories: CollectionConfig = {
         }
       }
 
-      if (req.user.role === 'admin') {
+      if (req.user.collection === 'admins') {
         return true
       }
 

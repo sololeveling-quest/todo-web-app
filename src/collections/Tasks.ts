@@ -12,7 +12,7 @@ const Tasks: CollectionConfig = {
         return false
       }
 
-      if (req.user.role === 'user') {
+      if (req.user.collection === 'users' && req.user.role === 'user') {
         return {
           user: {
             equals: req.user.id,
@@ -20,7 +20,7 @@ const Tasks: CollectionConfig = {
         }
       }
 
-      if (req.user.role === 'admin') {
+      if (req.user.collection === 'admins') {
         return true
       }
 
@@ -35,7 +35,7 @@ const Tasks: CollectionConfig = {
           throw new Error('You must be logged in to view tasks')
         }
 
-        if (req.user.role === 'user') {
+        if (req.user.collection === 'users' && req.user.role === 'user') {
           if (category) {
             query.where = {
               ...query.where,
