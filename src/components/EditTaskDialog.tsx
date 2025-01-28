@@ -111,7 +111,7 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
         <DialogHeader>
           <DialogTitle>Edit Task</DialogTitle>
           <DialogDescription>
-            Make changes to your task here. Click save when you&quote;re done.
+            Make changes to your task here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>

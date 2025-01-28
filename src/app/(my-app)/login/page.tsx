@@ -86,7 +86,7 @@ export default function LoginPage() {
                 Forgot password?
               </Link>
               <span>
-                Don&quote;t have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <Link href="/register" className="text-blue-500 hover:underline">
                   Register here
                 </Link>

@@ -71,7 +71,7 @@ export default function ForgotPasswordPage() {
                 Back to Login
               </Link>
               <span>
-                Don&quote;t have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <Link href="/register" className="text-blue-500 hover:underline">
                   Register here
                 </Link>
