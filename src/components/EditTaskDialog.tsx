@@ -25,12 +25,12 @@ interface EditTaskDialogProps {
   onSave: (updatedTask: Task) => void
 }
 
-export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
+export function EditTaskDialog({ task, onClose, onSave }: Readonly<EditTaskDialogProps>) {
   const [title, setTitle] = useState(task.title)
-  const [description, setDescription] = useState(task.description || '')
+  const [description, setDescription] = useState(task.description ?? '')
   const [completed, setCompleted] = useState(task.completed)
-  const [dueDate, setDueDate] = useState(task.dueDate || '')
-  const [reminder, setReminder] = useState(task.reminder || '')
+  const [dueDate, setDueDate] = useState(task.dueDate ?? '')
+  const [reminder, setReminder] = useState(task.reminder ?? '')
   const [steps, setSteps] = useState<Step[]>(task.steps || [])
   const [newStep, setNewStep] = useState('')
   const [notes, setNotes] = useState<Note[]>(task.notes || [])
@@ -98,7 +98,7 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
     setHashtags(hashtags.filter((h) => h !== hashtag))
   }
 
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>, action: () => void) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, action: () => void) => {
     if (e.key === 'Enter') {
       e.preventDefault()
       action()
@@ -206,7 +206,7 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
                       <Input
                         value={newHashtag}
                         onChange={(e) => setNewHashtag(e.target.value)}
-                        onKeyPress={(e) => handleKeyPress(e, addHashtag)}
+                        onKeyDown={(e) => handleKeyDown(e, addHashtag)}
                         placeholder="New hashtag"
                       />
                       <Button type="button" onClick={addHashtag} size="icon">
@@ -244,7 +244,7 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
                   <Input
                     value={newStep}
                     onChange={(e) => setNewStep(e.target.value)}
-                    onKeyPress={(e) => handleKeyPress(e, addStep)}
+                    onKeyDown={(e) => handleKeyDown(e, addStep)}
                     placeholder="New step"
                   />
                   <Button type="button" onClick={addStep} size="icon">
@@ -279,7 +279,7 @@ export function EditTaskDialog({ task, onClose, onSave }: EditTaskDialogProps) {
                   <Input
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
-                    onKeyPress={(e) => handleKeyPress(e, addNote)}
+                    onKeyDown={(e) => handleKeyDown(e, addNote)}
                     placeholder="New note"
                   />
                   <Button type="button" onClick={addNote} size="icon">

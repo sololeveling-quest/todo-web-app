@@ -97,10 +97,10 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: Readonly<
   }
 
   return (
-    <div className="w-80 border-r h-screen flex flex-col bg-white">
+    <div className="w-80 border-r h-screen flex flex-col bg-gray-50">
       <UserProfile />
 
-      <div className="p-4">
+      <div className="p-6">
         <div className="relative">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -112,7 +112,7 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: Readonly<
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto px-4">
+      <div className="flex-1 overflow-auto px-6 py-4 custom-scrollbar">
         {isLoading ? (
           <div className="flex justify-center items-center h-20">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -162,9 +162,14 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: Readonly<
                     className="flex items-center space-x-3 flex-1 text-left"
                     aria-label={`Select ${category.name} category`}
                   >
-                    <span className="text-lg">{category.isPredefined ? '📁' : '📂'}</span>
+                    <span
+                      className="text-lg"
+                      aria-label={category.isPredefined ? 'Predefined category' : 'Custom category'}
+                    >
+                      {category.isPredefined ? '📁' : '📂'}
+                    </span>
                     <span className="font-medium">{category.name}</span>
-                    <span className="text-sm text-muted-foreground ml-auto">
+                    <span className="text-sm text-muted-foreground ml-4">
                       {getTaskCount(category.id)}
                     </span>
                   </button>
@@ -198,7 +203,7 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: Readonly<
         )}
       </div>
 
-      <form onSubmit={handleAddCategory} className="p-4 border-t">
+      <form onSubmit={handleAddCategory} className="p-6 border-t">
         <div className="flex items-center space-x-2">
           <Input
             placeholder="Type new category"

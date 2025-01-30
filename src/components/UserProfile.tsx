@@ -22,11 +22,16 @@ export function UserProfile() {
           <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="space-y-1">
-          <p className="text-sm font-medium leading-none">{user?.name}</p>
-          <p className="text-xs text-muted-foreground">{user?.email}</p>
+          <p className="text-base font-semibold leading-none">{user?.name}</p>
+          <p className="text-sm text-muted-foreground">{user?.email}</p>
         </div>
       </div>
-      <Button variant="ghost" size="icon" onClick={handleLogout}>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={handleLogout}
+        className="hover:bg-primary hover:text-white"
+      >
         <LogOut className="h-4 w-4" />
       </Button>
     </div>

@@ -48,10 +48,10 @@ export default function DashboardPage() {
           tasks={tasks}
         />
 
-        <main className="flex-1 p-8 overflow-auto">
+        <main className="flex-1 py-10 px-8 overflow-auto">
           <div className="max-w-4xl mx-auto">
-            <div className="mb-8 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">{selectedCategory?.name ?? 'All Tasks'}</h1>
+            <div className="mb-10 flex items-center justify-between">
+              <h1 className="text-3xl font-bold">{selectedCategory?.name ?? 'All Tasks'}</h1>
               <div className="flex items-center space-x-4">
                 <AddTaskForm onAddTask={handleAddTask} selectedCategory={selectedCategory} />
               </div>

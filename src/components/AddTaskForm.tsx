@@ -33,7 +33,7 @@ interface AddTaskFormProps {
   selectedCategory: Category | null
 }
 
-export function AddTaskForm({ onAddTask, selectedCategory }: AddTaskFormProps) {
+export function AddTaskForm({ onAddTask, selectedCategory }: Readonly<AddTaskFormProps>) {
   const [isOpen, setIsOpen] = useState(false)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -107,7 +107,7 @@ export function AddTaskForm({ onAddTask, selectedCategory }: AddTaskFormProps) {
     setHashtags(hashtags.filter((h) => h !== hashtag))
   }
 
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>, action: () => void) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, action: () => void) => {
     if (e.key === 'Enter') {
       e.preventDefault()
       action()
@@ -117,13 +117,15 @@ export function AddTaskForm({ onAddTask, selectedCategory }: AddTaskFormProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Add Task</Button>
+        <Button className="hover:bg-primary hover:text-white focus:ring-2 focus:ring-primary">
+          Add Task
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add New Task</DialogTitle>
-          <DialogDescription>
-            Create a new task in the {selectedCategory?.name || 'default'} category.
+          <DialogDescription className="text-muted-foreground text-sm">
+            Create a new task in the {selectedCategory?.name ?? 'default'} category.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
@@ -137,14 +139,14 @@ export function AddTaskForm({ onAddTask, selectedCategory }: AddTaskFormProps) {
             <TabsContent value="main" className="space-y-4">
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="title" className="text-right">
+                  <Label htmlFor="title" className="text-right text-muted-foreground">
                     Title
                   </Label>
                   <Input
                     id="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="col-span-3"
+                    className="col-span-3 focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -208,7 +210,7 @@ export function AddTaskForm({ onAddTask, selectedCategory }: AddTaskFormProps) {
                       <Input
                         value={newHashtag}
                         onChange={(e) => setNewHashtag(e.target.value)}
-                        onKeyPress={(e) => handleKeyPress(e, addHashtag)}
+                        onKeyDown={(e) => handleKeyDown(e, addHashtag)}
                         placeholder="New hashtag"
                       />
                       <Button type="button" onClick={addHashtag} size="icon">
@@ -242,7 +244,7 @@ export function AddTaskForm({ onAddTask, selectedCategory }: AddTaskFormProps) {
                   <Input
                     value={newStep}
                     onChange={(e) => setNewStep(e.target.value)}
-                    onKeyPress={(e) => handleKeyPress(e, addStep)}
+                    onKeyDown={(e) => handleKeyDown(e, addStep)}
                     placeholder="New step"
                   />
                   <Button type="button" onClick={addStep} size="icon">
@@ -277,7 +279,7 @@ export function AddTaskForm({ onAddTask, selectedCategory }: AddTaskFormProps) {
                   <Input
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
-                    onKeyPress={(e) => handleKeyPress(e, addNote)}
+                    onKeyDown={(e) => handleKeyDown(e, addNote)}
                     placeholder="New note"
                   />
                   <Button type="button" onClick={addNote} size="icon">
@@ -288,7 +290,7 @@ export function AddTaskForm({ onAddTask, selectedCategory }: AddTaskFormProps) {
             </TabsContent>
           </Tabs>
 
-          <DialogFooter className="mt-4">
+          <DialogFooter className="mt-4 flex justify-end">
             <Button type="submit">Add Task</Button>
           </DialogFooter>
         </form>
