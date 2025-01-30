@@ -23,7 +23,11 @@ interface TaskListProps {
   onTasksChange: () => void
 }
 
-export function TaskList({ tasks, onTasksChange }: TaskListProps) {
+export function TaskList({
+  tasks,
+  onTasksChange,
+  className,
+}: TaskListProps & { className?: string }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const [expandedTasks, setExpandedTasks] = useState<string[]>([])
@@ -117,7 +121,7 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
           </Button>
         ))}
       </div>
-      <div className="space-y-2">
+      <div className="space-y-4">
         {isLoading ? (
           <div className="flex justify-center items-center h-20">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -130,7 +134,7 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
               key={task.id}
               className="bg-card text-card-foreground rounded-lg shadow-sm border border-border hover:shadow transition-all duration-200 ease-in-out"
             >
-              <div className="flex items-start justify-between p-4">
+              <div className="flex items-start justify-between p-4 space-x-2">
                 <div className="flex items-start space-x-3 flex-1">
                   <Checkbox
                     checked={task.completed}
@@ -221,7 +225,7 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
                     </div>
                   )}
                   {task.hashtags && task.hashtags.length > 0 && (
-                    <div>
+                    <div className={className}>
                       <h4 className="text-sm font-semibold mb-1">Hashtags:</h4>
                       <div className="flex flex-wrap gap-1">
                         {task.hashtags.map((hashtag) => (

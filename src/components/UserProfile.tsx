@@ -16,8 +16,8 @@ export function UserProfile() {
   }
 
   return (
-    <div className="flex items-center justify-between p-4 border-b">
-      <div className="flex items-center space-x-3">
+    <div className="flex flex-col md:flex-row items-center justify-between p-4 border-b bg-gray-50">
+      <div className="flex items-center space-x-3 mb-2 md:mb-0 text-sm">
         <Avatar>
           <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
         </Avatar>
