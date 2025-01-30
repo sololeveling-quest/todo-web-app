@@ -97,7 +97,7 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: Readonly<
   }
 
   return (
-    <div className="w-full md:w-80 border-r h-auto md:h-screen flex flex-col bg-gray-50 overflow-hidden">
+    <div className="w-full md:w-80 border-r h-auto md:h-screen flex flex-col bg-gray-50 overflow-hidden overflow-x-hidden">
       <UserProfile />
 
       <div className="p-4 md:p-6">
@@ -123,7 +123,7 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: Readonly<
           filteredCategories.map((category) => (
             <div
               key={category.id}
-              className={`group flex items-center justify-between py-3 px-3 rounded-lg transition-all duration-200 ease-in-out ${
+              className={`group flex items-center justify-between py-3 px-3 rounded-lg transition-all duration-200 ease-in-out truncate ${
                 selectedCategory?.id === category.id
                   ? 'bg-blue-100 text-blue-800 font-semibold'
                   : 'hover:bg-gray-100'
