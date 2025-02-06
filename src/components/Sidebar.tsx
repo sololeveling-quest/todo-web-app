@@ -101,18 +101,18 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: Readonly<
       <UserProfile />
 
       <div className="p-4 md:p-6">
-        <div className="relative">
-          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
           <Input
-            placeholder="Search category"
+            placeholder="Search categories..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-8"
+            className="pl-10 py-2"
           />
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto h-full px-4 py-2 md:px-6 md:py-4 custom-scrollbar bg-gray-50">
+      <div className="flex-1 overflow-y-auto h-full px-4 py-2 md:px-6 md:py-4 bg-gray-50 custom-scrollbar">
         {isLoading ? (
           <div className="flex justify-center items-center h-20">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -123,7 +123,7 @@ export function Sidebar({ onSelectCategory, selectedCategory, tasks }: Readonly<
           filteredCategories.map((category) => (
             <div
               key={category.id}
-              className={`group flex items-center justify-between py-3 px-3 rounded-lg transition-all duration-200 ease-in-out truncate ${
+              className={`group flex items-center justify-between py-3 px-4 rounded-lg transition-all duration-200 ease-in-out truncate ${
                 selectedCategory?.id === category.id
                   ? 'bg-blue-100 text-blue-800 font-semibold'
                   : 'hover:bg-gray-100'
